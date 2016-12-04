@@ -1,8 +1,13 @@
 #Project-2 Story Finder Finale
 #### Team Number
-TODO - Add your team number here.(Look into Piazza for details)
+Team #7
 #### Team Members
-TODO - Add your team member names here.
+Prateek Gupta
+
+Dion Matthew Lagos
+
+Possathorn Wittayaprechapol
+
 #### Youtube video Link
 TODO - Add your team's unlisted youtube video link here.
 
