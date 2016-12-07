@@ -1,4 +1,4 @@
-package com.example.billywitt.meets;
+package com.csc413.team7.meets;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
