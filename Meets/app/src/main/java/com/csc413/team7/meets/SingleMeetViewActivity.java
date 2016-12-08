@@ -15,7 +15,7 @@ public class SingleMeetViewActivity extends SingleFragmentActivity {
     private static final String EXTRA_STORY_ID = "com.team7.storyfinder.story.uuid";
 
     public static Intent newIntent(Context packageContext, UUID crimeId) {
-        Intent intent = new Intent(packageContext, SingleStoryViewActivity.class);
+        Intent intent = new Intent(packageContext, SingleMeetViewActivity.class);
         intent.putExtra(EXTRA_STORY_ID, crimeId);
         return intent;
     }
@@ -25,7 +25,7 @@ public class SingleMeetViewActivity extends SingleFragmentActivity {
 
         UUID crimeId = (UUID) getIntent()
                 .getSerializableExtra(EXTRA_STORY_ID);
-        return SingleStoryFragment.newInstance(crimeId);
+        return SingleMeetFragment.newInstance(crimeId);
         //return null;
     }
 }

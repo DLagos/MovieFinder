@@ -23,8 +23,8 @@ import java.util.List;
 
 public class MeetListFragment extends Fragment {
 
-    private RecyclerView mStoryRecyclerView;
-    private StoryAdapter mAdapter;
+    private RecyclerView mMeetRecyclerView;
+    //private Story mAdapter;
     private EditText mSearchBar;
 
     @Override
