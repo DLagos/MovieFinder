@@ -10,4 +10,9 @@ public class MainActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new MeetListFragment();
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 }
