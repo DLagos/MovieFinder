@@ -17,49 +17,52 @@ public class MeetFactory {
 
     private static MeetFactory mMeetFactory;
 
-    private List<Meet> mStories;
-    private int[] picIds = {R.drawable.catguy, R.drawable.mickey, R.drawable.minnie, R.drawable.simba, R.drawable.sfsu_logo};
-    private String[] names = {"Cat Guy", "Mickey Mouse", "Minnie Mouse", "Simba", "SFSU"};
+    private List<Meet> mMeets;
+    //private int[] picIds = {R.drawable.catguy, R.drawable.mickey, R.drawable.minnie, R.drawable.simba, R.drawable.sfsu_logo};
+    //private String[] names = {"Cat Guy", "Mickey Mouse", "Minnie Mouse", "Simba", "SFSU"};
 
-    public static StoryFactory getInstance(Context context){
+    public static MeetFactory getInstance(Context context){
 
-        if(sStoryFactory == null){
-            sStoryFactory = new StoryFactory(context);
+        if(mMeetFactory == null){
+            mMeetFactory = new MeetFactory(context);
         }
-        return sStoryFactory;
+        return mMeetFactory;
     }
 
-    private StoryFactory(Context context){
+    private MeetFactory(Context context){
 
-        mStories = new ArrayList<Story>();
+        mMeets = new ArrayList<Meet>();
         Random newRand = new Random();
         for(int i = 0; i<50; i++) {
             int index = newRand.nextInt(5);
-            Story story = new Story(UUID.randomUUID(), "Story " + i, "This is a story about " + names[index], BitmapFactory.decodeResource(context.getResources(), picIds[index]));
+            Meet meet = new Meet(UUID.randomUUID(), "Story " + i, "This is a story about ", BitmapFactory.decodeResource(context.getResources(), picIds[index]));
 
-            mStories.add(story);}
+            mMeets.add(meet);}
     }
 
-    public List<Story> getStories() {
-        return mStories;
+    public List<Meet> getStories() {
+        return mMeets;
     }
 
-    public List<Story> searchStories(String title){
-        List<Story> stories = new ArrayList<>();
-        for(Story s: mStories){
-            if(s.getmName().contains(title)){
-                stories.add(s);
+    public List<Meet> searchStories(String title){
+        List<Meet> meets = new ArrayList<>();
+        for(Meet s: mMeets){
+            if(s.getName().contains(title)){
+                meets.add(s);
             }
         }
-        return stories;
+        return meets;
     }
 
-    public Story getStory(UUID id) {
-        for (Story story : mStories) {
-            if (story.getmUuid().equals(id)) {
-                return story;
+    public Meet getStory(UUID id) {
+        /*
+        for (Meet meet : mMeets) {
+            if (meet.().equals(id)) {
+                return meet;
             }
         }
+        */
         return null;
+
     }
 }
