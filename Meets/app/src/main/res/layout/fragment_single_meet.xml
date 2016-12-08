@@ -6,7 +6,7 @@
     >
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/single_event_photo"
+        android:id="@+id/single_meet_photo"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
@@ -16,11 +16,11 @@
         android:text="Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/single_event_title"
+        android:id="@+id/single_meet_title"
         android:textSize="24sp"
         android:textStyle="normal|bold"
         android:textAlignment="center"
-        android:layout_below="@+id/single_event_photo"
+        android:layout_below="@+id/single_meet_photo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp" />
 
@@ -31,7 +31,7 @@
         android:id="@+id/single_event_desc"
         android:textSize="14sp"
         android:textAlignment="center"
-        android:layout_below="@+id/single_event_title"
+        android:layout_below="@+id/single_meet_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="65dp" />
 
@@ -39,17 +39,17 @@
         android:text="Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/single_event_date"
-        android:layout_below="@+id/single_event_title"
+        android:id="@+id/single_meet_date"
+        android:layout_below="@+id/single_meet_title"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/single_event_date"
+        android:layout_below="@+id/single_meet_date"
         android:layout_centerHorizontal="true"
-        android:id="@+id/single_event_location" />
+        android:id="@+id/single_meet_location" />
 
 
 </RelativeLayout>
