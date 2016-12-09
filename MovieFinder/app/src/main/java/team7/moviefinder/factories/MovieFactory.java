@@ -1,11 +1,13 @@
-package team7.moviefinder;
+package team7.moviefinder.factories;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import team7.moviefinder.Movie;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import team7.moviefinder.models.Movie;
 
 /**
  * Created by Dion on 12/9/16.

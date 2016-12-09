@@ -1,4 +1,4 @@
-package team7.moviefinder;
+package team7.moviefinder.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
