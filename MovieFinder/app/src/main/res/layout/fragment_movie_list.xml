@@ -4,10 +4,17 @@
     android:layout_height="match_parent">
 
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:id="@+id/editText" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/movie_recycler_view" />
+        android:id="@+id/movie_recycler_view"
+        android:layout_below="@+id/editText" />
 
     <TextView
         android:text="TextView"
@@ -15,7 +22,7 @@
         android:layout_height="match_parent"
         android:id="@+id/empty_text_view"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/editText" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -27,15 +34,5 @@
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="24dp"
         android:id="@+id/floatingActionButton" />
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="?attr/actionBarTheme"
-        android:minHeight="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -7,13 +7,16 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
     TextView textView;
     RecyclerView recyclerView;
+    EditText etSearch;
 
     public static MovieListFragment getInstance(){
         return new MovieListFragment();
@@ -47,10 +51,34 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        //((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         textView = (TextView) view.findViewById(R.id.empty_text_view);
         textView.setText("Search for movies using SearchView in toolbar");
+        etSearch = (EditText) view.findViewById(R.id.editText);
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() > 1) {
+                    controller.cancelAllRequests();
+                    controller.sendRequest(charSequence.toString());
+                } else if(charSequence.equals("")) {
+                    recyclerView.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.movie_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(App.getContext());
@@ -58,12 +86,14 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
         adapter = new RecyclerViewAdapter(new ArrayList<Movie>());
         adapter.setListener(this);
+        //recyclerView.setAdapter(adapter);
 
         controller = new JsonController(
                 new JsonController.OnResponseListener() {
                     @Override
                     public void onSuccess(List<Movie> movies) {
                         if(movies.size() > 0) {
+                            Log.e("TAG","On Success");
                             textView.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.invalidate();

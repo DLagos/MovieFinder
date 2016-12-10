@@ -14,7 +14,6 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import team7.moviefinder.factories.MovieFactory;
@@ -56,7 +55,8 @@ public class JsonRequest extends Request<List<Movie>> {
             jsonObject = new JSONObject(jsonString);
             // Get list of movies from received JSON
              movies = MovieFactory.parseJson(jsonObject);
-        }
+            Log.e("JSOnRequest",""+movies.size())
+;        }
         // in case of exception, return volley error
         catch (JSONException e) {
             e.printStackTrace();
