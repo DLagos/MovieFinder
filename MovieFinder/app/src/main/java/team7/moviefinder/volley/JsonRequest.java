@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import team7.moviefinder.factories.MovieFactory;
 import team7.moviefinder.models.Movie;
 
 /**
@@ -54,7 +55,7 @@ public class JsonRequest extends Request<List<Movie>> {
             // Convert JsonString to JSONObject
             jsonObject = new JSONObject(jsonString);
             // Get list of movies from received JSON
-             movies = new ArrayList<Movie>();//Movie.parseJson(jsonObject);
+             movies = MovieFactory.parseJson(jsonObject);
         }
         // in case of exception, return volley error
         catch (JSONException e) {

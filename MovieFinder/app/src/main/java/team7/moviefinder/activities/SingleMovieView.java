@@ -1,6 +1,10 @@
 package team7.moviefinder.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
+
+import java.util.UUID;
 
 import team7.moviefinder.fragments.SingleFragmentActivity;
 import team7.moviefinder.fragments.SingleMovieFragment;
@@ -10,8 +14,19 @@ import team7.moviefinder.fragments.SingleMovieFragment;
  */
 
 public class SingleMovieView extends SingleFragmentActivity {
+    private static final String EXTRA_MOVIE_ID = "com.team7.moviefinder.movie.id";
+
+    public static Intent newIntent(Context packageContext, UUID crimeId) {
+        Intent intent = new Intent(packageContext, SingleMovieView.class);
+        intent.putExtra(EXTRA_MOVIE_ID, crimeId);
+        return intent;
+    }
     @Override
     protected Fragment createFragment() {
-        return new SingleMovieFragment();
+
+        int id = (int) getIntent()
+                .getSerializableExtra(EXTRA_MOVIE_ID);
+        return SingleMovieFragment.newInstance(id);
+        //return null;
     }
 }

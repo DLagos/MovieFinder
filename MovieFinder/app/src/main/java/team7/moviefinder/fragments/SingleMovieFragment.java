@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public class SingleMovieFragment extends Fragment {
 
-    public static SingleMovieFragment getInstance(){
+    public static SingleMovieFragment newInstance(int id){
         return new SingleMovieFragment();
     }
 
