@@ -20,4 +20,15 @@
         android:id="@+id/detail_text_view"
         android:gravity="center_vertical|center_horizontal" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="24dp"
+        android:id="@+id/floatingActionButton" />
+
 </RelativeLayout>
