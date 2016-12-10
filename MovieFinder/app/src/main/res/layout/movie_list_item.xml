@@ -39,19 +39,21 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:id="@+id/movie_rating_text_view"
-            android:layout_below="@+id/movie_title_text_view"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_marginRight="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/movie_date_text_view"
+            android:layout_toLeftOf="@+id/movie_poster_image_view"
+            android:layout_toStartOf="@+id/movie_poster_image_view" />
 
         <TextView
             android:text="Release Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/movie_date_text_view"
-            android:layout_alignBottom="@+id/movie_poster_image_view"
-            android:layout_alignRight="@+id/movie_rating_text_view"
-            android:layout_alignEnd="@+id/movie_rating_text_view"
-            android:layout_marginBottom="13dp" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
     </RelativeLayout>

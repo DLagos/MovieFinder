@@ -1,7 +1,9 @@
 package team7.moviefinder.fragments;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +43,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
     TextView textView;
     RecyclerView recyclerView;
     EditText etSearch;
+    FloatingActionButton fab;
 
     public static MovieListFragment getInstance(){
         return new MovieListFragment();
@@ -56,6 +59,8 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
         textView = (TextView) view.findViewById(R.id.empty_text_view);
         textView.setText("Search for movies using SearchView in toolbar");
         etSearch = (EditText) view.findViewById(R.id.editText);
+        fab = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
+        fab.setImageResource(R.drawable.location_icon);
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,6 +82,14 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // get the location
+                Log.e("FAB", "Floating Action Button Clicked");
+                Toast.makeText(getContext(), "Location", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -154,12 +167,8 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
     }
 
     @Override
-    public void onCardClick(Movie movie) {
-
-    }
+    public void onCardClick(Movie movie) { }
 
     @Override
-    public void onPosterClick(Movie movie) {
-
-    }
+    public void onPosterClick(Movie movie) { }
 }
