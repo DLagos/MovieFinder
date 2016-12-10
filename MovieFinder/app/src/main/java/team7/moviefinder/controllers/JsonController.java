@@ -1,7 +1,7 @@
 package team7.moviefinder.controllers;
 
 import android.net.Uri;
-
+import team7.moviefinder.constants.Constants;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -45,7 +45,7 @@ public class JsonController {
         int method = Request.Method.GET;
 
         // Url with GET parameters
-        String url = "http://www.omdbapi.com/?s=" + Uri.encode(query) + "&t=movie";
+        String url = Constants.URL + Uri.encode(query);
 
         // Create new request using JsonRequest
         JsonRequest request
