@@ -9,7 +9,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/movieRecyclerView" />
+        android:id="@+id/movie_recycler_view" />
 
     <TextView
         android:text="TextView"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView"
+        android:id="@+id/detail_text_view"
         android:gravity="center_vertical|center_horizontal" />
 
 </RelativeLayout>
