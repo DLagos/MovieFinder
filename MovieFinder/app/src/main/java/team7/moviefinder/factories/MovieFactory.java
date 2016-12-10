@@ -15,6 +15,10 @@ import team7.moviefinder.models.Movie;
 
 public class MovieFactory {
 
+    private static MovieFactory mMovieFactory;
+
+    private List<Movie> mMovies;
+
     public static List<Movie> parseJson(JSONObject jsonObject) throws JSONException {
         List<Movie> movies = new ArrayList<>();
         // Check if the JSONObject has object with key "Search"
@@ -27,6 +31,21 @@ public class MovieFactory {
             }
         }
 
+        return movies;
+    }
+
+
+    public List<Movie> getStories() {
+        return mMovies;
+    }
+
+    public List<Movie> searchMovies(String title){
+        List<Movie> movies = new ArrayList<>();
+        for(Movie s: mMovies){
+            if(s.getTitle().contains(title)){
+                movies.add(s);
+            }
+        }
         return movies;
     }
 }
