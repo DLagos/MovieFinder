@@ -1,7 +1,7 @@
 package team7.moviefinder.controllers;
 
 import android.net.Uri;
-import team7.moviefinder.constants.Constants;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -9,9 +9,10 @@ import com.android.volley.VolleyError;
 import java.util.List;
 
 import team7.moviefinder.app.App;
-import team7.moviefinder.volley.VolleySingleton;
-import team7.moviefinder.volley.JsonRequest;
+import team7.moviefinder.constants.Constants;
 import team7.moviefinder.models.Movie;
+import team7.moviefinder.volley.JsonRequest;
+import team7.moviefinder.volley.VolleySingleton;
 
 
 /*

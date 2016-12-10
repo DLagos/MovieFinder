@@ -12,7 +12,7 @@ public class Movie {
     private int id;
     private String overview;
     private String release_date;
-    private int vote_average;
+    private double vote_average;
     private String posterUrl;
 
     public Movie(JSONObject jsonObject) throws JSONException {
@@ -20,7 +20,7 @@ public class Movie {
         if(jsonObject.has("release_date")) this.setDate(jsonObject.getString("release_date"));
         if(jsonObject.has("overview")) this.setOverview(jsonObject.getString("overview"));
         if(jsonObject.has("id")) this.setId(jsonObject.getInt("id"));
-        if(jsonObject.has("vote_average")) this.setAvg(jsonObject.getInt("vote_average"));
+        if(jsonObject.has("vote_average")) this.setAvg(jsonObject.getDouble("vote_average"));
         if(jsonObject.has("poster_path")) this.setPosterUrl("https://image.tmdb.org/t/p/w600_and_h900_bestv2" + jsonObject.getString("poster_path"));
     }
 
@@ -48,11 +48,11 @@ public class Movie {
         this.release_date = release_date;
     }
 
-    public int getAvg() {
+    public double getAvg() {
         return vote_average;
     }
 
-    public void setAvg(int vote_average) {
+    public void setAvg(double vote_average) {
         this.vote_average = vote_average;
     }
 

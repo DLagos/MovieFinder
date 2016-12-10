@@ -1,7 +1,5 @@
 package team7.moviefinder.constants;
 
-import android.net.Uri;
-
 /**
  * Created by LIBEXTMAC on 12/9/16.
  */
