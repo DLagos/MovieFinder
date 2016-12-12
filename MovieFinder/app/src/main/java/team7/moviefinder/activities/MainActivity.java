@@ -1,5 +1,6 @@
 package team7.moviefinder.activities;
 
+import android.app.Application;
 import android.support.v4.app.Fragment;
 
 import team7.moviefinder.fragments.MovieListFragment;
@@ -10,7 +11,7 @@ public class MainActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
 
-        return new MovieListFragment();
+        return new MovieListFragment(getApplicationContext());
     }
 
 }
