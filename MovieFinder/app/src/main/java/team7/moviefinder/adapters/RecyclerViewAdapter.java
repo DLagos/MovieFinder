@@ -112,7 +112,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
          */
         void setTitle(String title) {
             String t =  title;
-            this.title.setText(t);
+            if(t!=null)
+                this.title.setText(t);
         }
 
         /**
