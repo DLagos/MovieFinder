@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -44,7 +43,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         CardViewHolder cardViewHolder = (CardViewHolder) holder;
         cardViewHolder.setTitle(movie.getTitle());
-        cardViewHolder.setYear(movie.getDate());
+        int descLen = movie.getOverview().length();
+        if(descLen < 100){
+            cardViewHolder.setYear(movie.getOverview());
+        }else{
+            cardViewHolder.setYear(movie.getOverview().substring(0,100));
+        }
+
         cardViewHolder.setPosterUrl(movie.getPosterUrl());
         cardViewHolder.setMovieRating(movie.getAvg());
         if(listener!=null) {
@@ -115,7 +120,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
          * @param year String of year of release
          */
         void setYear(String year) {
-            String y = "Release Year:\n" + year;
+            String y = "" + year + "...";
             this.releaseDate.setText(y);
         }
 
@@ -132,7 +137,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
         void setMovieRating(double rating) {
-            String r = "Rating: " + rating;
+            String r = "" + rating;
             this.ratings.setText(r);
         }
         /**

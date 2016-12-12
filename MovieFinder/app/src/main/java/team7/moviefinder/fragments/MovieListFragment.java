@@ -1,7 +1,6 @@
 package team7.moviefinder.fragments;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -81,7 +80,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
         switch (requestCode) {
             case 10:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationManager.requestLocationUpdates("gps", 5000, 0, mLocationListener);
+                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, mLocationListener);
                 }
         }
     }
@@ -142,14 +141,15 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() > 1) {
+                if (charSequence.length() > 1) {
                     controller.cancelAllRequests();
                     controller.sendRequest(charSequence.toString());
-                } else if(charSequence.equals("")) {
+                } else if (charSequence.equals("")) {
                     recyclerView.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
                 }
@@ -165,7 +165,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
             public void onClick(View v) {
                 // get the location
                 Log.e("FAB", "Floating Action Button Clicked");
-                mLocationManager.requestLocationUpdates("gps", 5000, 0, mLocationListener);
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, mLocationListener);
                 Log.e("FAB Lat2: ", String.valueOf(mLatitude));
                 Log.e("FAB Long2: ", String.valueOf(mLongitude));
                 if (mLatitude == 0 || mLongitude == 0) {
@@ -173,8 +173,8 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
                             "GPS location retrieved. Please click to see the current location",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(),
-                            String.valueOf(mLatitude) + ", " + String.valueOf(mLongitude),
+                    Toast.makeText(getContext(), "Latitude: "+
+                            String.valueOf(mLatitude) + ", " + "Longitude: "+String.valueOf(mLongitude),
                             Toast.LENGTH_SHORT).show();
                 }
             }

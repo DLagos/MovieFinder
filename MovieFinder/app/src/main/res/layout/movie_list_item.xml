@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,51 +10,73 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:background="@color/cardview_shadow_end_color">
+        android:paddingLeft="10dp"
+        android:background="@color/cardview_dark_background">
 
         <TextView
             android:text="Title"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/movie_title_text_view"
             android:layout_weight="1"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:textStyle="normal|bold"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/movie_poster_image_view"
+            android:layout_toStartOf="@+id/movie_poster_image_view"
+            android:textColor="?android:attr/colorForegroundInverse" />
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/movie_poster_image_view"
             android:layout_width="100dp"
-            android:layout_height="130dp"
+            android:layout_height="150dp"
             android:src="@drawable/loader"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:text="Rating: 7.8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:id="@+id/movie_rating_text_view"
-            android:layout_marginRight="17dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/movie_date_text_view"
-            android:layout_toLeftOf="@+id/movie_poster_image_view"
-            android:layout_toStartOf="@+id/movie_poster_image_view" />
-
-        <TextView
             android:text="Release Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:textStyle="italic"
             android:id="@+id/movie_date_text_view"
-            android:layout_centerVertical="true"
+            android:textColor="?android:attr/colorForegroundInverse"
+            android:layout_below="@+id/movie_title_text_view"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/movie_title_text_view"
+            android:layout_alignEnd="@+id/movie_title_text_view" />
+
+        <TextView
+            android:text="7.8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/movie_rating_text_view"
+            android:textColor="?android:attr/colorForegroundInverse"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_toStartOf="@+id/imageView"
+            android:layout_alignTop="@+id/imageView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/btn_star_big_on"
+            android:id="@+id/imageView"
+            android:layout_alignBottom="@+id/movie_poster_image_view"
+            android:layout_alignRight="@+id/movie_title_text_view"
+            android:layout_alignEnd="@+id/movie_title_text_view"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"/>
 
 
     </RelativeLayout>
