@@ -16,9 +16,9 @@ import team7.moviefinder.fragments.SingleMovieFragment;
 public class SingleMovieView extends SingleFragmentActivity {
     private static final String EXTRA_MOVIE_ID = "com.team7.moviefinder.movie.id";
 
-    public static Intent newIntent(Context packageContext, UUID crimeId) {
+    public static Intent newIntent(Context packageContext, int id) {
         Intent intent = new Intent(packageContext, SingleMovieView.class);
-        intent.putExtra(EXTRA_MOVIE_ID, crimeId);
+        intent.putExtra(EXTRA_MOVIE_ID, id);
         return intent;
     }
     @Override

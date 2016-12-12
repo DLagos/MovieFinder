@@ -1,6 +1,7 @@
 package team7.moviefinder.fragments;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import team7.moviefinder.R;
+import team7.moviefinder.activities.SingleMovieView;
 import team7.moviefinder.adapters.RecyclerViewAdapter;
 import team7.moviefinder.app.App;
 import team7.moviefinder.controllers.JsonController;
@@ -167,7 +169,10 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
     }
 
     @Override
-    public void onCardClick(Movie movie) { }
+    public void onCardClick(Movie movie) {
+        Intent intent = SingleMovieView.newIntent(getActivity(), movie.getId());
+        startActivity(intent);
+    }
 
     @Override
     public void onPosterClick(Movie movie) { }
