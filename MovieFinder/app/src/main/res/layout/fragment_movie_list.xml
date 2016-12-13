@@ -5,16 +5,21 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-
-    <EditText
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
-        android:id="@+id/editText" />
+        android:layout_height="wrap_content" >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -34,15 +39,27 @@
         android:id="@+id/floatingActionButton" />
 
     <TextView
-        android:text="TextView"
+        android:text="Search movies from search bar"
+        android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/empty_text_view"
         android:gravity="center_vertical|center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/movie_recycler_view" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:padding="10dp"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:id="@+id/editText"
+        android:layout_below="@+id/action_bar"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

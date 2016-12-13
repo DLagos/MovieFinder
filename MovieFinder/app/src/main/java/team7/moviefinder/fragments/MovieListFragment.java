@@ -1,12 +1,15 @@
 package team7.moviefinder.fragments;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -15,9 +18,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -31,6 +36,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +52,10 @@ import team7.moviefinder.R;
 import team7.moviefinder.activities.SingleMovieView;
 import team7.moviefinder.adapters.RecyclerViewAdapter;
 import team7.moviefinder.app.App;
+import team7.moviefinder.constants.Constants;
 import team7.moviefinder.controllers.JsonController;
 import team7.moviefinder.models.Movie;
+import team7.moviefinder.volley.VolleySingleton;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -53,6 +69,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
     Context mContext;
     private static double mLatitude;
     private static double mLongitude;
+    private String videoUrl;
 
     public MovieListFragment(Context mContext) {
         this.mContext = mContext;
@@ -91,8 +108,8 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
-        //Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        //((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
         textView = (TextView) view.findViewById(R.id.empty_text_view);
         textView.setText("Search for movies using SearchView in toolbar");
         etSearch = (EditText) view.findViewById(R.id.editText);
@@ -255,12 +272,87 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
     @Override
     public void onCardClick(Movie movie) {
-        Intent intent = SingleMovieView.newIntent(getActivity(), movie.getId());
-        startActivity(intent);
+        TrailerRequest request = new TrailerRequest(movie.getId());
+        request.execute(movie.getId() + "");
+
     }
 
     @Override
-    public void onPosterClick(Movie movie) { }
+    public void onPosterClick(final Movie movie) { }
 
+    class TrailerRequest extends AsyncTask<String, String, String> {
 
+        private ProgressDialog dialog;
+        private boolean gotResp = false;
+        private int movieId;
+
+        TrailerRequest(int movieId){
+            this.movieId = movieId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = ProgressDialog.show(MovieListFragment.this.getContext(),"Loading","Please wait...",false);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            final String url = Constants.VIDEO_URL_PRE + String.valueOf(movieId) + Constants.VIDEO_URL_POST;
+            final String[] key = new String[1];
+            Log.e("VideoURL",url);
+
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.e("Response ", response.toString());
+                            if(response.has("results")){
+                                // Get JSONArray from JSONObject
+                                JSONArray jsonArray = null;
+                                try {
+                                    jsonArray = response.getJSONArray("results");
+                                    JSONObject jsonObj = jsonArray.getJSONObject(0);
+                                    key[0] = (String)jsonObj.get("key");
+                                    Log.e("Key",key[0]);
+                                    //key[0] = (String)(jsonArray.getJSONObject(0)).get("key");
+                                    //Log.e("")
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(MovieListFragment.this.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            gotResp = true;
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            );
+
+            // add it to the RequestQueue
+            VolleySingleton.getInstance(App.getContext()).addToRequestQueue(getRequest);
+            while(true){
+                if(gotResp == true)
+                    break;
+            }
+            return key[0];
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            dialog.dismiss();
+            //Log.e("onPostExec",s);
+            //videoUrl = s;
+            Intent intent = SingleMovieView.newIntent(getActivity(), movieId,s);
+            startActivity(intent);
+        }
+    }
 }

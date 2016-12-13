@@ -9,9 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayer.Provider;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import team7.moviefinder.R;
 import team7.moviefinder.app.App;
@@ -19,19 +24,6 @@ import team7.moviefinder.constants.Constants;
 import team7.moviefinder.factories.MovieFactory;
 import team7.moviefinder.models.Movie;
 import team7.moviefinder.volley.VolleySingleton;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayer.Provider;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 /**
  * Created by Dion on 12/9/16.
  */
@@ -39,6 +31,8 @@ import com.google.android.youtube.player.YouTubePlayerView;
 public class SingleMovieFragment extends Fragment {
 
     private static final String ARG_MOVIE_ID = "movie_id";
+    private static final String ARG_VIDEO_ID = "video_id";
+
     private Movie mMovie;
     //title, id, overview, releasedate, voteavg, posterurl
     private TextView mTitle;
@@ -46,13 +40,15 @@ public class SingleMovieFragment extends Fragment {
     private TextView mRelease_date;
     private TextView mAvg;
     private NetworkImageView poster;
+    private String videoId;
     //ImageLoader imageLoader = VolleySingleton.getInstance(App.getContext()).getImageLoader();
 
     private YouTubePlayer YPlayer;
 
-    public static SingleMovieFragment newInstance(int id) {
+    public static SingleMovieFragment newInstance(int id, String videoID){
         Bundle args = new Bundle();
         args.putSerializable(ARG_MOVIE_ID, id);
+        args.putSerializable(ARG_VIDEO_ID,videoID);
 
         SingleMovieFragment fragment = new SingleMovieFragment();
         fragment.setArguments(args);
@@ -87,7 +83,7 @@ public class SingleMovieFragment extends Fragment {
                 if (!b) {
                     YPlayer = youTubePlayer;
                     YPlayer.setFullscreen(false);
-                    YPlayer.loadVideo("2zNSgSzhBfM");
+                    YPlayer.loadVideo(videoId);
 
                 }
             }
@@ -107,6 +103,8 @@ public class SingleMovieFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int movieId = (int) getArguments().getSerializable(ARG_MOVIE_ID);
+        videoId = (String) getArguments().getSerializable(ARG_VIDEO_ID);
+        Toast.makeText(App.getContext(),videoId+"",Toast.LENGTH_LONG).show();
         mMovie = MovieFactory.getInstance().getMovie(movieId);
 
 
