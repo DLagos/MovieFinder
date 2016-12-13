@@ -261,4 +261,6 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
     @Override
     public void onPosterClick(Movie movie) { }
+
+
 }
