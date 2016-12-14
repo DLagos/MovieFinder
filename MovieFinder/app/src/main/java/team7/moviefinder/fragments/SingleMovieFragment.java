@@ -42,7 +42,6 @@ public class SingleMovieFragment extends Fragment {
     private NetworkImageView poster;
     private String videoId;
     //ImageLoader imageLoader = VolleySingleton.getInstance(App.getContext()).getImageLoader();
-
     private YouTubePlayer YPlayer;
 
     public static SingleMovieFragment newInstance(int id, String videoID){
@@ -79,15 +78,43 @@ public class SingleMovieFragment extends Fragment {
         youTubePlayerFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
 
             @Override
-            public void onInitializationSuccess(Provider arg0, YouTubePlayer youTubePlayer, boolean b) {
-                if (!b) {
-                    YPlayer = youTubePlayer;
-                    YPlayer.setFullscreen(false);
-                    YPlayer.loadVideo(videoId);
+            public void onInitializationSuccess(Provider arg0, final YouTubePlayer youTubePlayer, boolean b) {
+            YPlayer = youTubePlayer;
+                YPlayer.loadVideo(videoId);
+                youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+
+               private boolean interceptPlay = true;
+                @Override
+                public void onPlaying() {
+                    if(interceptPlay){
+                        youTubePlayer.pause();
+                        interceptPlay = false;
+                    }
+                }
+
+                @Override
+                public void onPaused() {
 
                 }
-            }
 
+                @Override
+                public void onStopped() {
+
+                }
+
+                @Override
+                public void onBuffering(boolean b) {
+
+                }
+
+                @Override
+                public void onSeekTo(int i) {
+
+                }
+            });
+
+
+            }
             @Override
             public void onInitializationFailure(Provider arg0, YouTubeInitializationResult arg1) {
                 Log.e("NO WORK", arg1.toString());
@@ -104,7 +131,6 @@ public class SingleMovieFragment extends Fragment {
         super.onCreate(savedInstanceState);
         int movieId = (int) getArguments().getSerializable(ARG_MOVIE_ID);
         videoId = (String) getArguments().getSerializable(ARG_VIDEO_ID);
-        Toast.makeText(App.getContext(),videoId+"",Toast.LENGTH_LONG).show();
         mMovie = MovieFactory.getInstance().getMovie(movieId);
 
 

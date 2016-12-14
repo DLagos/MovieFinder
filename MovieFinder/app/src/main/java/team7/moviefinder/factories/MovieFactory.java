@@ -37,10 +37,8 @@ public class MovieFactory {
     public static List<Movie> parseJson(JSONObject jsonObject) throws JSONException {
         mMovies = new ArrayList<>();
         if(jsonObject.has("results")){
-            // Get JSONArray from JSONObject
             JSONArray jsonArray = jsonObject.getJSONArray("results");
             for(int i = 0; i < jsonArray.length(); i++){
-                // Create new Movie object from each JSONObject in the JSONArray
                 mMovies.add(new Movie(jsonArray.getJSONObject(i)));
 
             }

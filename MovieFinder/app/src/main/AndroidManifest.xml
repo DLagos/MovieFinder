@@ -15,7 +15,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"> </activity>
-        <activity android:name=".activities.SingleMovieView"> </activity>
+        <activity android:name=".activities.SingleMovieView"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

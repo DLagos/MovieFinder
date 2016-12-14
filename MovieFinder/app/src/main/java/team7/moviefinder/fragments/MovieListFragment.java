@@ -111,7 +111,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
         textView = (TextView) view.findViewById(R.id.empty_text_view);
-        textView.setText("Search for movies using SearchView in toolbar");
+        textView.setText("Search for movies using the search bar above");
         etSearch = (EditText) view.findViewById(R.id.editText);
         fab = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
         fab.setImageResource(R.drawable.location_icon);
