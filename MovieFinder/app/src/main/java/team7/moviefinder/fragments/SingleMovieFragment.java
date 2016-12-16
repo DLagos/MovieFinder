@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -71,57 +70,58 @@ public class SingleMovieFragment extends Fragment {
         poster.setImageUrl(mMovie.getPosterUrl(), imgLoader);
         mAvg.setText(String.valueOf(mMovie.getAvg()));
 
-        YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit();
+        if(videoId != null){
+            YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit();
 
-        youTubePlayerFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            youTubePlayerFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
 
-            @Override
-            public void onInitializationSuccess(Provider arg0, final YouTubePlayer youTubePlayer, boolean b) {
-            YPlayer = youTubePlayer;
-                YPlayer.loadVideo(videoId);
-                youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
-
-               private boolean interceptPlay = true;
                 @Override
-                public void onPlaying() {
-                    if(interceptPlay){
-                        youTubePlayer.pause();
-                        interceptPlay = false;
-                    }
+                public void onInitializationSuccess(Provider arg0, final YouTubePlayer youTubePlayer, boolean b) {
+                    YPlayer = youTubePlayer;
+                    YPlayer.loadVideo(videoId);
+                    youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+
+                        private boolean interceptPlay = true;
+                        @Override
+                        public void onPlaying() {
+                            if(interceptPlay){
+                                youTubePlayer.pause();
+                                interceptPlay = false;
+                            }
+                        }
+
+                        @Override
+                        public void onPaused() {
+
+                        }
+
+                        @Override
+                        public void onStopped() {
+
+                        }
+
+                        @Override
+                        public void onBuffering(boolean b) {
+
+                        }
+
+                        @Override
+                        public void onSeekTo(int i) {
+
+                        }
+                    });
+
+
                 }
-
                 @Override
-                public void onPaused() {
-
-                }
-
-                @Override
-                public void onStopped() {
-
-                }
-
-                @Override
-                public void onBuffering(boolean b) {
-
-                }
-
-                @Override
-                public void onSeekTo(int i) {
-
+                public void onInitializationFailure(Provider arg0, YouTubeInitializationResult arg1) {
+                    Log.e("NO WORK", arg1.toString());
                 }
             });
+        }
 
-
-            }
-            @Override
-            public void onInitializationFailure(Provider arg0, YouTubeInitializationResult arg1) {
-                Log.e("NO WORK", arg1.toString());
-
-
-            }
-        });
         return v;
     }
 

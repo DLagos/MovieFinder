@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -109,7 +110,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
         textView = (TextView) view.findViewById(R.id.empty_text_view);
         textView.setText("Search for movies using the search bar above");
         etSearch = (EditText) view.findViewById(R.id.editText);
@@ -190,8 +191,8 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
                             "GPS location retrieved. Please click to see the current location",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Latitude: "+
-                            String.valueOf(mLatitude) + ", " + "Longitude: "+String.valueOf(mLongitude),
+                    Toast.makeText(getContext(), "Latitude: " +
+                                    String.valueOf(mLatitude) + ", " + "Longitude: " + String.valueOf(mLongitude),
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -209,8 +210,8 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
                 new JsonController.OnResponseListener() {
                     @Override
                     public void onSuccess(List<Movie> movies) {
-                        if(movies.size() > 0) {
-                            Log.e("TAG","On Success");
+                        if (movies.size() > 0) {
+                            Log.e("TAG", "On Success");
                             textView.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.invalidate();
@@ -244,7 +245,7 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        if(query.length() > 1) {
+        if (query.length() > 1) {
             controller.cancelAllRequests();
             controller.sendRequest(query);
             return false;
@@ -259,10 +260,10 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if(newText.length() > 1) {
+        if (newText.length() > 1) {
             controller.cancelAllRequests();
             controller.sendRequest(newText);
-        } else if(newText.equals("")) {
+        } else if (newText.equals("")) {
             recyclerView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);
         }
@@ -272,87 +273,56 @@ public class MovieListFragment extends Fragment implements RecyclerViewAdapter.O
 
     @Override
     public void onCardClick(Movie movie) {
-        TrailerRequest request = new TrailerRequest(movie.getId());
-        request.execute(movie.getId() + "");
 
+        lookupVideoTrailer(movie);
+
+    }
+
+    private void lookupVideoTrailer(final Movie movie) {
+
+        final String url = Constants.VIDEO_URL_PRE + String.valueOf(movie.getId()) + Constants.VIDEO_URL_POST;
+        final String[] key = new String[1];
+        Log.e("VideoURL", url);
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("Response ", response.toString());
+                        if (response.has("results")) {
+                            // Get JSONArray from JSONObject
+                            JSONArray jsonArray = null;
+                            try {
+                                jsonArray = response.getJSONArray("results");
+                                JSONObject jsonObj = jsonArray.getJSONObject(0);
+                                key[0] = (String) jsonObj.get("key");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(MovieListFragment.this.getContext(), "Video trailer not available", Toast.LENGTH_SHORT).show();
+                            }
+                            Intent intent = SingleMovieView.newIntent(getActivity(), movie.getId(), key[0]);
+                            startActivity(intent);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(MovieListFragment.this.getContext(), "Video trailer not available", Toast.LENGTH_SHORT).show();
+                        Intent intent = SingleMovieView.newIntent(getActivity(), movie.getId(), key[0]);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        VolleySingleton.getInstance(App.getContext()).addToRequestQueue(getRequest);
     }
 
     @Override
-    public void onPosterClick(final Movie movie) { }
-
-    class TrailerRequest extends AsyncTask<String, String, String> {
-
-        private ProgressDialog dialog;
-        private boolean gotResp = false;
-        private int movieId;
-
-        TrailerRequest(int movieId){
-            this.movieId = movieId;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = ProgressDialog.show(MovieListFragment.this.getContext(),"Loading","Please wait...",false);
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            final String url = Constants.VIDEO_URL_PRE + String.valueOf(movieId) + Constants.VIDEO_URL_POST;
-            final String[] key = new String[1];
-            Log.e("VideoURL",url);
-
-            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                    new Response.Listener<JSONObject>()
-                    {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.e("Response ", response.toString());
-                            if(response.has("results")){
-                                // Get JSONArray from JSONObject
-                                JSONArray jsonArray = null;
-                                try {
-                                    jsonArray = response.getJSONArray("results");
-                                    JSONObject jsonObj = jsonArray.getJSONObject(0);
-                                    key[0] = (String)jsonObj.get("key");
-                                    Log.e("Key",key[0]);
-                                    //key[0] = (String)(jsonArray.getJSONObject(0)).get("key");
-                                    //Log.e("")
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(MovieListFragment.this.getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            gotResp = true;
-                        }
-                    },
-                    new Response.ErrorListener()
-                    {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Error.Response", error.toString());
-                        }
-                    }
-            );
-
-            // add it to the RequestQueue
-            VolleySingleton.getInstance(App.getContext()).addToRequestQueue(getRequest);
-            while(true){
-                if(gotResp == true)
-                    break;
-            }
-            return key[0];
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            dialog.dismiss();
-            //Log.e("onPostExec",s);
-            //videoUrl = s;
-            Intent intent = SingleMovieView.newIntent(getActivity(), movieId,s);
-            startActivity(intent);
-        }
+    public void onPosterClick(final Movie movie) {
     }
+
 }
+
