@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Movie Finder</string>
+    <string name="search_movies_from_search_bar">Search movies from search bar</string>
+    <string name="search">Search</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="overview">Overview</string>
+    <string name="date">date</string>
+    <string name="avg">avg</string>
+    <string name="release_date">Release Date:</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="list_item_rating">7.8</string>
+    <string name="list_item_release_date">Release Date</string>
+    <string name="list_item_title">Title</string>
+    <string name="app_by">Movie Finder - Team 7</string>
 </resources>

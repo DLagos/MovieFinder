@@ -40,7 +40,7 @@
         app:backgroundTint="#24f795" />
 
     <TextView
-        android:text="Search movies from search bar"
+        android:text="@string/search_movies_from_search_bar"
         android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +54,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search"
+        android:hint="@string/search"
         android:padding="10dp"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"

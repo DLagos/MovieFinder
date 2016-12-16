@@ -31,7 +31,7 @@
             android:layout_below="@+id/single_movie_poster_image_view"
             android:gravity="center"
             android:layout_marginTop="17dp"
-            android:text="Movie Title"
+            android:text="@string/movie_title"
             android:textSize="20dp"
             android:textStyle="normal|bold"
             android:textColor="@android:color/white"
@@ -41,7 +41,7 @@
             android:layout_alignStart="@+id/single_movie_poster_image_view" />
 
         <TextView
-            android:text="Release Date:"
+            android:text="@string/release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView2"
@@ -54,7 +54,7 @@
             android:id="@+id/single_movie_avg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="avg"
+            android:text="@string/avg"
             android:textSize="16sp"
             android:textColor="@android:color/white"
             android:layout_marginTop="23dp"
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="date"
+            android:text="@string/date"
             android:textSize="16sp"
             android:textColor="@android:color/white"
             android:layout_marginLeft="11dp"
@@ -82,7 +82,7 @@
             android:id="@+id/single_movie_description_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Overview"
+            android:text="@string/overview"
             android:textSize="14sp"
             android:textColor="@android:color/white"
             android:layout_marginTop="5dp"
@@ -91,7 +91,7 @@
             android:layout_alignStart="@+id/single_movie_title_text_view" />
 
         <TextView
-            android:text="Synopsis"
+            android:text="@string/synopsis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView3"
